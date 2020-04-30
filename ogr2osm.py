@@ -549,7 +549,11 @@ def output():
             xmlobject = etree.Element('relation', xmlattrs)
 
             for (member, role) in relation.members:
-                member = etree.Element('member', {'type':'way', 'ref':str(member.id), 'role':role})
+                if isinstance(member, Point):
+                    memberType = "node"
+                else:
+                    memberType = "way"
+                member = etree.Element('member', {'type':memberType, 'ref':str(member.id), 'role':role})
                 xmlobject.append(member)
 
             tag = etree.Element('tag', {'k':'type', 'v':'multipolygon'})
